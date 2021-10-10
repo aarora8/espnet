@@ -30,13 +30,6 @@ dec-embed-dim: 256
 dunits: 256
 dropout-rate-decoder: 0.4
 dropout-rate-embed-decoder: 0.4
-## attention related
-atype: location
-adim: 256
-aheads: 1
-awin: 5
-aconv-chans: 10
-aconv-filts: 100
 ## joint network related
 joint-dim: 256
 
