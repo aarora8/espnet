@@ -10,7 +10,7 @@
 backend=pytorch
 stage=0        # start from 0 if you need to start from data preparation
 stop_stage=100
-ngpu=3         # number of gpus ("0" uses cpu, otherwise use gpu)
+ngpu=1         # number of gpus ("0" uses cpu, otherwise use gpu)
 debugmode=1
 dumpdir=dump   # directory to dump full features
 N=0            # number of minibatches to be used (mainly for debugging). "0" uses all minibatches.
@@ -28,7 +28,7 @@ recog_model=model.loss.best # set a model to be used for decoding: 'model.acc.be
 n_average=10
 
 # data
-chime5_corpus=/export/corpora4/CHiME5
+chime5_corpus=/export/common/data/corpora/CHiME5/
 
 # exp tag
 tag="" # tag for managing experiments.
@@ -41,12 +41,12 @@ set -e
 set -u
 set -o pipefail
 
-if [ ${stage} -le 0 ] && [ ${stop_stage} -ge 0 ]; then
-    ### Task dependent. You have to make data the following preparation part by yourself.
-    ### But you can utilize Kaldi recipes in most cases
-    echo "stage 0: Data preparation"
-    local/prepare_baseline_chime6_data.sh --chime5_corpus ${chime5_corpus}
-fi
+#if [ ${stage} -le 0 ] && [ ${stop_stage} -ge 0 ]; then
+#    ### Task dependent. You have to make data the following preparation part by yourself.
+#    ### But you can utilize Kaldi recipes in most cases
+#    echo "stage 0: Data preparation"
+#    local/prepare_baseline_chime6_data.sh --chime5_corpus ${chime5_corpus}
+#fi
 
 train_set=train_worn_simu_u400k_cleaned
 train_dev=dev_gss
