@@ -10,11 +10,10 @@ export LC_ALL=C
 export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:$MAIN_ROOT/tools/chainer_ctc/ext/warp-ctc/buildi:$KALDI_ROOT/src/lib:$KALDI_ROOT/tools/openfst/lib:$KALDI_ROOT/tools/openfst/lib/fst
 if [ -e $MAIN_ROOT/tools/venv/etc/profile.d/conda.sh ]; then
     source $MAIN_ROOT/tools/venv/etc/profile.d/conda.sh && conda deactivate && conda activate
-else
-    source $MAIN_ROOT/tools/venv/bin/activate
 fi
 export PATH=$MAIN_ROOT/utils:$MAIN_ROOT/espnet/bin:$PATH
-
+sctk=/exp/aarora/espnet_work_env/espnet_me/tools/sctk/bin/
+export PATH=$sctk:$PATH
 export OMP_NUM_THREADS=1
 
 # NOTE(kan-bayashi): Use UTF-8 in Python to avoid UnicodeDecodeError when LC_ALL=C
