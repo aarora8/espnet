@@ -17,7 +17,7 @@ weight-decay: 1e-6
 
 # network architecture
 ## encoder related
-etype: transformer
+etype: vggblstm
 transformer-input-layer: vgg2l
 transformer-lr: 10.0
 transformer-warmup-steps: 25000
@@ -32,10 +32,6 @@ dec-embed-dim: 256
 dunits: 256
 dropout-rate-decoder: 0.4
 dropout-rate-embed-decoder: 0.4
-## attention related
-atype: location
-adim: 512
-aheads: 8
 ## joint network related
 joint-dim: 256
 
