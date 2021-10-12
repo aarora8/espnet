@@ -819,7 +819,7 @@ if ! "${skip_train}"; then
 
             # shellcheck disable=SC2086
             ${python} -m espnet2.bin.launch \
-                --cmd "${cuda_cmd} --name ${jobname}" \
+                --cmd "${cuda_cmd}" \
                 --log "${lm_exp}"/train.log \
                 --ngpu "${ngpu}" \
                 --num_nodes "${num_nodes}" \
@@ -1066,7 +1066,7 @@ if ! "${skip_train}"; then
 
         # shellcheck disable=SC2086
         ${python} -m espnet2.bin.launch \
-            --cmd "${cuda_cmd} --name ${jobname}" \
+            --cmd "${cuda_cmd}" \
             --log "${asr_exp}"/train.log \
             --ngpu "${ngpu}" \
             --num_nodes "${num_nodes}" \
