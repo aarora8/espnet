@@ -28,7 +28,7 @@
 
 
 # Select the backend used by run.sh from "local", "stdout", "sge", "slurm", or "ssh"
-cmd_backend='local'
+cmd_backend='coe'
 
 # Local machine, without any Job scheduling system
 if [ "${cmd_backend}" = local ]; then
@@ -52,6 +52,8 @@ elif [ "${cmd_backend}" = stdout ]; then
 
 
 # "qsub" (Sun Grid Engine, or derivation of it)
+
+# "qsub" (SGE, Torque, PBS, etc.)
 elif [ "${cmd_backend}" = sge ]; then
     # The default setting is written in conf/queue.conf.
     # You must change "-q g.q" for the "queue" for your environment.
@@ -72,12 +74,13 @@ elif [ "${cmd_backend}" = pbs ]; then
     export decode_cmd="pbs.pl"
 
 
+
 # "sbatch" (Slurm)
 elif [ "${cmd_backend}" = slurm ]; then
     # The default setting is written in conf/slurm.conf.
     # You must change "-p cpu" and "-p gpu" for the "partition" for your environment.
     # To know the "partion" names, type "sinfo".
-    # You can use "--gpu * " by default for slurm and it is interpreted as "--gres gpu:*"
+    # You can use "--gpu * " by defualt for slurm and it is interpreted as "--gres gpu:*"
     # The devices are allocated exclusively using "${CUDA_VISIBLE_DEVICES}".
 
     export train_cmd="slurm.pl"
@@ -101,8 +104,14 @@ elif [ "${cmd_backend}" = ssh ]; then
 elif [ "${cmd_backend}" = jhu ]; then
 
     export train_cmd="queue.pl --mem 2G"
-    export cuda_cmd="queue-freegpu.pl --mem 2G --gpu 1 --config conf/queue.conf"
+    export cuda_cmd="queue-freegpu.pl --mem 2G --gpu 1 --config conf/gpu.conf"
     export decode_cmd="queue.pl --mem 4G"
+
+elif [ "${cmd_backend}" = coe ]; then
+
+    export train_cmd="queue.pl"
+    export cuda_cmd="queue.pl --dur 8 --gpu 1 --config conf/coe.conf"
+    export decode_cmd="queue.pl --dur 24 --config conf/coe.conf"
 
 else
     echo "$0: Error: Unknown cmd_backend=${cmd_backend}" 1>&2
