@@ -20,9 +20,9 @@ speed_perturb_factors=""
 ./asr.sh \
     --audio_format flac.ark \
     --lang en \
-    --ngpu 4 \
-    --nj 128 \
-    --inference_nj 256 \
+    --ngpu 1 \
+    --nj 12 \
+    --inference_nj 25 \
     --use_lm false \
     --nbpe 5000 \
     --max_wav_duration 30 \

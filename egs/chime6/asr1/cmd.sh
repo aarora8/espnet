@@ -86,8 +86,8 @@ elif [ "${cmd_backend}" = jhu ]; then
 elif [ "${cmd_backend}" = coe ]; then
 
     export train_cmd="queue.pl"
-    export cuda_cmd="queue.pl --dur 48 --gpu 1 --config conf/coe.conf"
-    export decode_cmd="queue.pl --dur 24 --config conf/coe.conf"
+    export cuda_cmd="queue.pl --dur 8 --gpu 1 --config conf/coe.conf"
+    export decode_cmd="queue.pl --dur 4 --config conf/coe.conf"
 
 else
     echo "$0: Error: Unknown cmd_backend=${cmd_backend}" 1>&2
