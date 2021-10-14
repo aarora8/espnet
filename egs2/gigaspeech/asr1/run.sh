@@ -21,8 +21,8 @@ speed_perturb_factors=""
     --audio_format flac.ark \
     --lang en \
     --ngpu 1 \
-    --nj 12 \
-    --inference_nj 25 \
+    --nj 128 \
+    --inference_nj 128 \
     --use_lm false \
     --nbpe 5000 \
     --max_wav_duration 30 \
