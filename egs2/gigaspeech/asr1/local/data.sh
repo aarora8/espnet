@@ -34,28 +34,28 @@ if [ ! -e "${GIGASPEECH}" ]; then
     exit 1
 fi
 
-#if [ ${stage} -le 1 ] && [ ${stop_stage} -ge 1 ]; then
-#    if [ -d "${GIGASPEECH}/audio" ] && [ -f "${GIGASPEECH}/GigaSpeech.json" ]; then
-#	log "GIGASPEECH found in ${GIGASPEECH}."
-#	rm -fr GigaSpeech
-#	git clone $giga_repo
-#    else
-#	echo "Valid GIGASPEECH data not found in ${GIGASPEECH}."
-#	echo "Please follow the instruction in https://github.com/SpeechColab/GigaSpeech#dataset-download"
-#	echo "and re-construct the data."
-#	exit 1
-#    fi
-#fi
+if [ ${stage} -le 1 ] && [ ${stop_stage} -ge 1 ]; then
+    if [ -d "${GIGASPEECH}/audio" ] && [ -f "${GIGASPEECH}/GigaSpeech.json" ]; then
+	log "GIGASPEECH found in ${GIGASPEECH}."
+	rm -fr GigaSpeech
+	git clone $giga_repo
+    else
+	echo "Valid GIGASPEECH data not found in ${GIGASPEECH}."
+	echo "Please follow the instruction in https://github.com/SpeechColab/GigaSpeech#dataset-download"
+	echo "and re-construct the data."
+	exit 1
+    fi
+fi
 
-#if [ ${stage} -le 2 ] && [ ${stop_stage} -ge 2 ]; then
-#    log "data preparation"
-#    mkdir -p ${data_dir}
-#    abs_data_dir=$(readlink -f ${data_dir})
-#    log "making Kaldi format data directory in ${abs_data_dir}"
-#    pushd GigaSpeech
-#    ./toolkits/kaldi/gigaspeech_data_prep.sh --train-subset XS --stage 3 ${GIGASPEECH} ${abs_data_dir}
-#    popd
-#fi
+if [ ${stage} -le 2 ] && [ ${stop_stage} -ge 2 ]; then
+    log "data preparation"
+    mkdir -p ${data_dir}
+    abs_data_dir=$(readlink -f ${data_dir})
+    log "making Kaldi format data directory in ${abs_data_dir}"
+    pushd GigaSpeech
+    ./toolkits/kaldi/gigaspeech_data_prep.sh --train-subset XS ${GIGASPEECH} ${abs_data_dir}
+    popd
+fi
 
 if [ ${stage} -le 3 ] && [ ${stop_stage} -ge 3 ]; then
     log "fixing data directories"
