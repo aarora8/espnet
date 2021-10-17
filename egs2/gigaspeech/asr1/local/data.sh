@@ -59,6 +59,10 @@ fi
 
 if [ ${stage} -le 3 ] && [ ${stop_stage} -ge 3 ]; then
     log "fixing data directories"
+    mv data/gigaspeech_dev data/dev
+    mv data/gigaspeech_test data/test
+    mv data/gigaspeech_train_xs data/train
+
     for sub in train dev test; do
 	utils/fix_data_dir.sh ${data_dir}/${sub}
 	# reco2dur causes the error at stage 4 in asr.sh
