@@ -1,0 +1,50 @@
+# minibatch related
+batch-size: 22
+maxlen-in: 800
+maxlen-out: 150
+
+# optimization related
+# A special criterion to avoid a local optimum.
+# This allows an improvement of up to 5% in WER abs.
+criterion: loss_eps_decay_only
+early-stop-criterion: "validation/main/loss"
+save-interval-iters: 0
+sortagrad: 0
+opt: adadelta
+epochs: 10
+patience: 0
+weight-decay: 1e-6
+
+# network architecture
+## encoder related
+etype: vggblstm
+elayers: 6
+eunits: 512
+eprojs: 512
+subsample: "1_1_1_1_1"
+dropout-rate: 0.4
+## decoder related
+dtype: lstm
+dlayers: 2
+dec-embed-dim: 256
+dunits: 256
+dropout-rate-decoder: 0.4
+dropout-rate-embed-decoder: 0.4
+## joint network related
+joint-dim: 256
+
+# transducer related
+model-module: "espnet.nets.pytorch_backend.e2e_asr_transducer:E2E"
+use-ctc-loss: True
+ctc-loss-weight: 0.5
+ctc-loss-dropout-rate: 0.1
+use-lm-loss: True
+lm-loss-weight: 0.5
+lm-loss-smoothing-rate: 0.05
+use-aux-transducer-loss: True
+aux-transducer-loss-weight: 0.3
+aux-transducer-loss-enc-output-layers: "[0]"
+aux-transducer-loss-mlp-dim: 4
+aux-transducer-loss-mlp-dropout-rate: 0.1
+use-symm-kl-div-loss: True
+symm-kl-div-loss-weight: 0.3
