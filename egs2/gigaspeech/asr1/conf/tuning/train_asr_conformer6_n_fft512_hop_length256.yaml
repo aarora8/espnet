@@ -1,16 +1,16 @@
 # This configuration requires TITAN RTX (24GB) x 4 GPUs It takes about XX days.
-batch_type: numel
 batch_bins: 3500000
-accum_grad: 4
-max_epoch: 20
-patience: none
-init: none
+batch_size: 20
+batch_type: numel
 best_model_criterion:
 -   - valid
     - acc
     - max
+accum_grad: 4
+max_epoch: 20
+patience: none
+init: none
 keep_nbest_models: 10
-
 encoder: conformer
 encoder_conf:
     output_size: 512
@@ -73,3 +73,9 @@ specaug_conf:
     - 0
     - 40
     num_time_mask: 2
+
+enc-init: /exp/aarora/espnet_work_env/espnet_me/egs2/gigaspeech/asr1/exp/download_model/valid.acc.ave_10best.pth
+enc-init-mods: "encoder."
+
+dec-init: /exp/aarora/espnet_work_env/espnet_me/egs2/gigaspeech/asr1/exp/download_model/valid.acc.ave_10best.pth
+dec-init-mods: "decoder."
