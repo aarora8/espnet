@@ -53,7 +53,8 @@ if [ ${stage} -le 2 ] && [ ${stop_stage} -ge 2 ]; then
     abs_data_dir=$(readlink -f ${data_dir})
     log "making Kaldi format data directory in ${abs_data_dir}"
     pushd GigaSpeech
-    ./toolkits/kaldi/gigaspeech_data_prep.sh ${GIGASPEECH} ${abs_data_dir}
+    ./toolkits/kaldi/gigaspeech_data_prep.sh --train-subset XS ${GIGASPEECH} ${abs_data_dir}
+    #./toolkits/kaldi/gigaspeech_data_prep.sh --train-subset XS ${GIGASPEECH} ${abs_data_dir}
     popd
 fi
 
@@ -61,8 +62,8 @@ if [ ${stage} -le 3 ] && [ ${stop_stage} -ge 3 ]; then
     log "fixing data directories"
     mv data/gigaspeech_dev data/dev
     mv data/gigaspeech_test data/test
-    #mv data/gigaspeech_train_xs data/train
-    mv data/gigaspeech_train_xl data/train
+    mv data/gigaspeech_train_xs data/train
+    #mv data/gigaspeech_train_xl data/train
     for sub in train dev test; do
 	utils/fix_data_dir.sh ${data_dir}/${sub}
 	# reco2dur causes the error at stage 4 in asr.sh

@@ -24,8 +24,8 @@ speed_perturb_factors="0.9 1.0 1.1"
 
 ./asr.sh                                                 \
     --lang en                                            \
-    --use_lm false                                       \
-    --nbpe 5000                                          \
+    --use_lm true                                        \
+    --nbpe 100                                           \
     --max_wav_duration 30                                \
     --lm_config "${lm_config}"                           \
     --asr_config "${asr_config}"                         \
@@ -38,4 +38,5 @@ speed_perturb_factors="0.9 1.0 1.1"
     --valid_set "${valid_set}"                           \
     --test_sets "${test_sets}"                           \
     --speed_perturb_factors "${speed_perturb_factors}"   \
+    --lm_train_text "data/${train_set}/text"             \
     --bpe_train_text "data/${train_set}/text" "$@" 
