@@ -24,7 +24,6 @@ speed_perturb_factors="0.9 1.0 1.1"
 
 ./asr.sh                                                 \
     --lang en                                            \
-    --ngpu 4                                             \
     --use_lm false                                       \
     --nbpe 5000                                          \
     --max_wav_duration 30                                \
