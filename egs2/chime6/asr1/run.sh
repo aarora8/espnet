@@ -6,35 +6,37 @@ set -u
 set -o pipefail
 
 
-
-train_set=tr05_multi_noisy_si284 # tr05_multi_noisy (original training data) or tr05_multi_noisy_si284 (add si284 data)
-valid_set=dt05_multi_isolated_1ch_track
-test_sets="\
-dt05_real_isolated_1ch_track dt05_simu_isolated_1ch_track et05_real_isolated_1ch_track et05_simu_isolated_1ch_track \
-dt05_real_beamformit_2mics dt05_simu_beamformit_2mics et05_real_beamformit_2mics et05_simu_beamformit_2mics \
-dt05_real_beamformit_5mics dt05_simu_beamformit_5mics et05_real_beamformit_5mics et05_simu_beamformit_5mics \
-"
+train_set=train
+valid_set=dev
+test_sets=eval
 
 asr_config=conf/train_asr_rnn.yaml
 inference_config=conf/decode_asr_rnn.yaml
 lm_config=conf/train_lm.yaml
 
+#asr_config=conf/tuning/train_asr_transformer4.yaml
+#lm_config=conf/tuning/train_lm_transformer2.yaml
+#inference_config=conf/tuning/decode_transformer2.yaml
 
 use_word_lm=false
 word_vocab_size=65000
+speed_perturb_factors="0.9 1.0 1.1"
 
-./asr.sh                                   \
-    --lang en \
-    --nlsyms_txt data/nlsyms.txt           \
-    --token_type char                      \
-    --feats_type fbank_pitch               \
-    --asr_config "${asr_config}"           \
-    --inference_config "${inference_config}"     \
-    --lm_config "${lm_config}"             \
-    --use_word_lm ${use_word_lm}           \
-    --word_vocab_size ${word_vocab_size}   \
-    --train_set "${train_set}"             \
-    --valid_set "${valid_set}"             \
-    --test_sets "${test_sets}"             \
-    --bpe_train_text "data/${train_set}/text" \
-    --lm_train_text "data/${train_set}/text data/local/other_text/text" "$@"
+./asr.sh                                                 \
+    --lang en                                            \
+    --ngpu 4                                             \
+    --use_lm false                                       \
+    --nbpe 5000                                          \
+    --max_wav_duration 30                                \
+    --lm_config "${lm_config}"                           \
+    --asr_config "${asr_config}"                         \
+    --inference_config "${inference_config}"             \
+    --token_type char                                    \
+    --feats_type fbank_pitch                             \
+    --use_word_lm ${use_word_lm}                         \
+    --word_vocab_size ${word_vocab_size}                 \
+    --train_set "${train_set}"                           \
+    --valid_set "${valid_set}"                           \
+    --test_sets "${test_sets}"                           \
+    --speed_perturb_factors "${speed_perturb_factors}"   \
+    --bpe_train_text "data/${train_set}/text" "$@" 
