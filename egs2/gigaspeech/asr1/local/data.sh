@@ -54,7 +54,7 @@ if [ ${stage} -le 2 ] && [ ${stop_stage} -ge 2 ]; then
     log "making Kaldi format data directory in ${abs_data_dir}"
     pushd GigaSpeech
     ./toolkits/kaldi/gigaspeech_data_prep.sh --train-subset XS ${GIGASPEECH} ${abs_data_dir}
-    #./toolkits/kaldi/gigaspeech_data_prep.sh --train-subset XS ${GIGASPEECH} ${abs_data_dir}
+    #./toolkits/kaldi/gigaspeech_data_prep.sh ${GIGASPEECH} ${abs_data_dir}
     popd
 fi
 
