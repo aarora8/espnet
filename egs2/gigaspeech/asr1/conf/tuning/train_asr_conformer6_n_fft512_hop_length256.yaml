@@ -7,7 +7,7 @@ best_model_criterion:
     - acc
     - max
 accum_grad: 4
-max_epoch: 20
+max_epoch: 1
 patience: none
 init: none
 keep_nbest_models: 10
@@ -73,6 +73,8 @@ specaug_conf:
     - 0
     - 40
     num_time_mask: 2
+
+init_param: '/exp/aarora/espnet_work_env/espnet_me/egs2/gigaspeech/asr1/archieve/asr_train_asr_raw_en_bpe5000_valid/exp/asr_train_asr_raw_en_bpe5000/valid.acc.ave_10best.pth'
 #
 #enc-init: /exp/aarora/espnet_work_env/espnet_me/egs2/gigaspeech/asr1/exp/download_model/valid.acc.ave_10best.pth
 #enc-init-mods: "encoder."

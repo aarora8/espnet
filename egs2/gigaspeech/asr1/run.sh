@@ -7,7 +7,7 @@ set -o pipefail
 
 train_set="train"
 valid_set="dev"
-test_sets="dev test"
+test_sets="dev"
 
 asr_config=conf/train_asr.yaml
 lm_config=conf/train_lm.yaml
