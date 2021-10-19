@@ -13,25 +13,28 @@ asr_config=conf/train_asr.yaml
 lm_config=conf/train_lm.yaml
 inference_config=conf/decode_asr.yaml
 
-# speed perturbation related
-# (train_set will be "${train_set}_sp" if speed_perturb_factors is specified)
-speed_perturb_factors=""
+#  --use_word_lm false                                                                                         \
+#  --speed_perturb_factors "0.9 1.0 1.1"                                                                       \
+#  --audio_format wav                                                                                          \
+#  --use_lm true                                                                                               \
 
-./asr.sh \
-    --audio_format flac.ark \
-    --lang en \
-    --ngpu 1 \
-    --nj 128 \
-    --inference_nj 128 \
-    --use_lm false \
-    --nbpe 5000 \
-    --max_wav_duration 30 \
-    --speed_perturb_factors "${speed_perturb_factors}" \
-    --asr_config "${asr_config}" \
-    --lm_config "${lm_config}" \
-    --inference_config "${inference_config}" \
-    --train_set "${train_set}" \
-    --valid_set "${valid_set}" \
-    --test_sets "${test_sets}" \
-    --bpe_train_text "data/${train_set}/text" "$@" \
-    --local_score_opts "--inference_config ${inference_config} --use_lm false"
+./asr.sh                                                                                                       \
+    --lang en                                                                                                  \
+    --audio_format wav                                                                                         \
+    --max_wav_duration 30                                                                                      \
+    --speed_perturb_factors "0.9 1.0 1.1"                                                                      \
+    --token_type bpe                                                                                           \
+    --nbpe 5000                                                                                                \
+    --use_lm true                                                                                              \
+    --lm_config "${lm_config}"                                                                                 \
+    --asr_config "${asr_config}"                                                                               \
+    --inference_config "${inference_config}"                                                                   \
+    --train_set "${train_set}"                                                                                 \
+    --valid_set "${valid_set}"                                                                                 \
+    --test_sets "${test_sets}"                                                                                 \
+    --lm_train_text "data/${train_set}/text"                                                                   \
+    --bpe_train_text "data/${train_set}/text" "$@"                                                             \
+    --nj 128                                                                                                   \
+    --inference_nj 128                                                                                         \
+    --ngpu 1                                                                                                   \
+    --local_score_opts "--inference_config ${inference_config}"
