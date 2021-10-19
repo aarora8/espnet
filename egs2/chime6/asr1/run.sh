@@ -10,8 +10,8 @@ train_set=train
 valid_set=dev
 test_sets=eval
 
-asr_config=conf/train_asr_rnn.yaml
-inference_config=conf/decode_asr_rnn.yaml
+asr_config=conf/train_asr_transformer.yaml
+inference_config=conf/decode_asr_transformer.yaml
 lm_config=conf/train_lm.yaml
 
 #asr_config=conf/tuning/train_asr_transformer4.yaml
