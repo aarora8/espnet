@@ -6,12 +6,11 @@ set -o pipefail
 
 lm_exp=
 inference_tag=
-inference_config=
 inference_args=
 use_lm=
 inference_lm=valid.loss.ave.pth
 inference_asr_model=valid.acc.ave.pth
-test_sets="dev eval"
+test_sets="dev"
 
 . ./path.sh || exit 1;
 . ./cmd.sh || exit 1;

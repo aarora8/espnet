@@ -1329,7 +1329,7 @@ if ! "${skip_eval}"; then
             done
         done
 
-        [ -f local/score.sh ] && local/score.sh ${local_score_opts} "${asr_exp}"
+        [ -f local/score.sh ] && local/score.sh ${local_score_opts} --inference_tag $inference_tag "${asr_exp}"
 
         # Show results in Markdown syntax
         scripts/utils/show_asr_result.sh "${asr_exp}" > "${asr_exp}"/RESULTS.md

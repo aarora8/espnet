@@ -37,4 +37,4 @@ inference_config=conf/decode_asr.yaml
     --nj 128                                                                                                   \
     --inference_nj 128                                                                                         \
     --ngpu 1                                                                                                   \
-    --local_score_opts "--inference_config ${inference_config}"
+    --local_score_opts "--use_lm true"
