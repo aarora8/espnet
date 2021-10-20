@@ -4,9 +4,9 @@ import argparse
 
 conversational_filler = ['UH', 'UHH', 'UM', 'EH', 'MM', 'HM', 'MHM', 'MMM', 'HMM', 'AH', 'HUH', 'HA', 'ER', 'OOF', 'HEE' , 'ACH', 'EEE', 'EW']
 unk_tags = ['<UNK>', '<unk>']
-gigaspeech_punctuations = ['<COMMA>', '<PERIOD>', '<QUESTIONMARK>', '<EXCLAMATIONPOINT>', '[inaudible]', '[laughs]', '[noise]' ]
+gigaspeech_punctuations = ['<COMMA>', '<PERIOD>', '<QUESTIONMARK>', '<EXCLAMATIONPOINT>', '[INAUDIBLE]', '[LAUGHS]', '[NOISE]' ]
 gigaspeech_garbage_utterance_tags = ['<SIL>', '<NOISE>', '<MUSIC>', '<OTHER>']
-non_scoring_words = conversational_filler + unk_tags + gigaspeech_punctuations + gigaspeech_garbage_utterance_tags
+non_scoring_words = unk_tags + gigaspeech_punctuations + gigaspeech_garbage_utterance_tags
 
 def asr_text_post_processing(text):
     # convert to uppercase
@@ -17,6 +17,8 @@ def asr_text_post_processing(text):
     for word in text.split():
         if word in non_scoring_words:
             continue
+        if word in conversational_filler:
+            word = 'HMM'
         remaining_words.append(word)
 
     return ' '.join(remaining_words)
@@ -45,4 +47,4 @@ if __name__ == '__main__':
                     uttid_field = cols[-1]
                     print(F'{text} {uttid_field}', file=fo)
     
-    os.system(F'sclite -r {REF} trn -h {HYP} trn -i swb | tee {RESULT}')
+    os.system(F'sclite -r {REF} trn -h {HYP} trn -i rm | tee {RESULT}')

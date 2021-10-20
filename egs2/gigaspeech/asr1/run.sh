@@ -12,6 +12,7 @@ test_sets="dev"
 asr_config=conf/train_asr.yaml
 lm_config=conf/train_lm.yaml
 inference_config=conf/decode_asr.yaml
+nlsyms_txt=archieve/non_lang_syms.txt
 
 #  --use_word_lm false                                                                                         \
 #  --speed_perturb_factors "0.9 1.0 1.1"                                                                       \
@@ -37,4 +38,5 @@ inference_config=conf/decode_asr.yaml
     --nj 128                                                                                                   \
     --inference_nj 128                                                                                         \
     --ngpu 1                                                                                                   \
+    --nlsyms_txt ${nlsyms_txt}                                                                                 \
     --local_score_opts "--use_lm true"
