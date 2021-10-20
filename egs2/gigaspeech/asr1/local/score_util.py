@@ -11,7 +11,6 @@ non_scoring_words = unk_tags + gigaspeech_punctuations + gigaspeech_garbage_utte
 def asr_text_post_processing(text):
     # convert to uppercase
     text = text.upper()
-
     # remove non-scoring words from evaluation
     remaining_words = []
     for word in text.split():
@@ -38,7 +37,7 @@ if __name__ == '__main__':
     RESULT = os.path.join(args.work_dir, 'RESULT')
 
     for io in [(args.ref, REF), (args.hyp, HYP)]:
-        with open(io[0], 'r', encoding='utf8') as fi, open(io[1], 'w+', encoding='utf8') as fo:
+        with open(io[0], 'r', encoding='utf8') as fi, open(io[1], 'w', encoding='utf8') as fo:
             for line in fi:
                 line = line.strip()
                 if line:
@@ -47,4 +46,4 @@ if __name__ == '__main__':
                     uttid_field = cols[-1]
                     print(F'{text} {uttid_field}', file=fo)
     
-    os.system(F'sclite -r {REF} trn -h {HYP} trn -i rm | tee {RESULT}')
+    os.system(F'sclite -r {REF} trn -h {HYP} trn -i rm -o all stdout > {RESULT}')

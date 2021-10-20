@@ -29,10 +29,5 @@ if [ -n "${test_sets}" ]; then
             _scoredir="${_dir}/score_${_type}"
             python local/score_util.py ${_scoredir}/ref.trn ${_scoredir}/hyp.trn ${_scoredir}
         done
-        #for _type in wer; do
-        #    _scoredir="${_dir}/score_${_type}"
-        #    bash local/score_sclite.sh --wer true --nlsyms ${nlsyms} --filter local/wer_output_filter ${expdir}/${decode_dir} ${dict} 
-        #    #${_scoredir}/ref.trn ${_scoredir}/hyp.trn ${_scoredir}
-        #done
     done
 fi
