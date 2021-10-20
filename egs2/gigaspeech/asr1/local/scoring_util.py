@@ -9,10 +9,10 @@ gigaspeech_garbage_utterance_tags = ['<SIL>', '<NOISE>', '<MUSIC>', '<OTHER>']
 non_scoring_words = conversational_filler + unk_tags + gigaspeech_punctuations + gigaspeech_garbage_utterance_tags
 
 def asr_text_post_processing(text):
-    # 1. convert to uppercase
+    # convert to uppercase
     text = text.upper()
 
-    # 3. remove non-scoring words from evaluation
+    # remove non-scoring words from evaluation
     remaining_words = []
     for word in text.split():
         if word in non_scoring_words:
@@ -22,7 +22,7 @@ def asr_text_post_processing(text):
     return ' '.join(remaining_words)
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description="This script evaluates GigaSpeech ASR result via SCTK's tool sclite")
+    parser = argparse.ArgumentParser(description="This script evaluates ASR result via SCTK's tool sclite")
     parser.add_argument('ref', type=str, help="sclite's standard transcription(trn) reference file")
     parser.add_argument('hyp', type=str, help="sclite's standard transcription(trn) hypothesis file")
     parser.add_argument('work_dir', type=str, help='working dir')
@@ -45,5 +45,4 @@ if __name__ == '__main__':
                     uttid_field = cols[-1]
                     print(F'{text} {uttid_field}', file=fo)
     
-    os.system(F'sclite -r {REF} trn -h {HYP} trn -i swb | tee {RESULT}') # GigaSpeech's uttid comforms to swb
-
+    os.system(F'sclite -r {REF} trn -h {HYP} trn -i swb | tee {RESULT}')
