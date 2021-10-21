@@ -5,7 +5,7 @@ set -e
 set -u
 set -o pipefail
 
-train_set="train"
+train_set="train_worn_simu_u400k_cleaned_trim_sp"
 valid_set="dev"
 test_sets="dev"
 
@@ -23,7 +23,6 @@ nlsyms_txt=archieve/non_lang_syms.txt
     --lang en                                                                                                  \
     --audio_format wav                                                                                         \
     --max_wav_duration 30                                                                                      \
-    --speed_perturb_factors "0.9 1.0 1.1"                                                                      \
     --token_type bpe                                                                                           \
     --nbpe 5000                                                                                                \
     --use_lm true                                                                                              \
@@ -36,7 +35,7 @@ nlsyms_txt=archieve/non_lang_syms.txt
     --lm_train_text "data/${train_set}/text"                                                                   \
     --bpe_train_text "data/${train_set}/text" "$@"                                                             \
     --nj 128                                                                                                   \
-    --inference_nj 128                                                                                         \
+    --inference_nj 256                                                                                         \
     --ngpu 1                                                                                                   \
     --nlsyms_txt ${nlsyms_txt}                                                                                 \
     --local_score_opts "--use_lm true"
