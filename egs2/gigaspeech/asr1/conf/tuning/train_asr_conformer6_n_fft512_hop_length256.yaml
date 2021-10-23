@@ -7,7 +7,7 @@ best_model_criterion:
     - acc
     - max
 accum_grad: 4
-max_epoch: 1
+max_epoch: 4
 patience: none
 init: none
 keep_nbest_models: 10

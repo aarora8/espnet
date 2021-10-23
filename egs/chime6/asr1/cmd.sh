@@ -86,7 +86,7 @@ elif [ "${cmd_backend}" = jhu ]; then
 elif [ "${cmd_backend}" = coe ]; then
 
     export train_cmd="queue.pl"
-    export cuda_cmd="queue.pl --dur 72 --gpu 2 --config conf/coe.conf"
+    export cuda_cmd="queue.pl --dur 90 --gpu 2 --config conf/coe.conf"
     export decode_cmd="queue.pl --dur 48 --config conf/coe.conf"
 
 else

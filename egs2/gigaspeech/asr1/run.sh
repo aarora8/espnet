@@ -36,6 +36,6 @@ nlsyms_txt=archieve/non_lang_syms.txt
     --bpe_train_text "data/${train_set}/text" "$@"                                                             \
     --nj 128                                                                                                   \
     --inference_nj 256                                                                                         \
-    --ngpu 1                                                                                                   \
+    --ngpu 2                                                                                                   \
     --nlsyms_txt ${nlsyms_txt}                                                                                 \
     --local_score_opts "--use_lm true"

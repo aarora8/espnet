@@ -15,7 +15,7 @@ debugmode=1
 dumpdir=dump   # directory to dump full features
 N=0            # number of minibatches to be used (mainly for debugging). "0" uses all minibatches.
 verbose=0      # verbose option
-resume=        # Resume the training from snapshot
+resume=exp/train_worn_simu_u400k_cleaned_trim_sp_pytorch_train/results/snapshot.ep.50        # Resume the training from snapshot
 
 # feature configuration
 do_delta=false
