@@ -165,25 +165,24 @@ fi
 
 if [ ${stage} -le 7 ] && [ ${stop_stage} -ge 7 ]; then
     echo "[STAGE 7]: Decoding"
-    nj=40
+    nj=256
 
-    if [[ $(get_yaml.py ${train_config} model-module) = *transformer* ]] || \
-           [[ $(get_yaml.py ${train_config} model-module) = *conformer* ]] || \
-           [[ $(get_yaml.py ${train_config} etype) = custom ]] || \
-           [[ $(get_yaml.py ${train_config} dtype) = custom ]]; then 
-        recog_model=model.last${n_average}.avg.best
-
-        average_checkpoints.py --backend ${backend} \
-			       --snapshots ${expdir}/results/snapshot.ep.* \
-			       --out ${expdir}/results/${recog_model} \
-			       --num ${n_average}
-    fi
+#    if [[ $(get_yaml.py ${train_config} model-module) = *transformer* ]] || \
+#           [[ $(get_yaml.py ${train_config} model-module) = *conformer* ]] || \
+#           [[ $(get_yaml.py ${train_config} etype) = custom ]] || \
+#           [[ $(get_yaml.py ${train_config} dtype) = custom ]]; then 
+#        recog_model=model.last${n_average}.avg.best
+#
+#        average_checkpoints.py --backend ${backend} \
+#			       --snapshots ${expdir}/results/snapshot.ep.* \
+#			       --out ${expdir}/results/${recog_model} \
+#			       --num ${n_average}
+#    fi
     
     decode_dir=decode_${train_dev}
 
-    # split data
+#    # split data
     splitjson.py --parts ${nj} ${feat_dt_dir}/data.json
-
     #### use CPU for decoding
     ngpu=0
 
@@ -196,7 +195,6 @@ if [ ${stage} -le 7 ] && [ ${stop_stage} -ge 7 ]; then
             --result-label ${expdir}/${decode_dir}/data.JOB.json \
             --model ${expdir}/results/${recog_model}  \
 
-    score_sclite.sh --wer true --nlsyms ${nlsyms} --filter local/wer_output_filter ${expdir}/${decode_dir} ${dict}
-
+    local/score.sh
     echo "Finished"
 fi
