@@ -10,8 +10,8 @@ non_scoring_words = unk_tags + gigaspeech_punctuations + gigaspeech_garbage_utte
 
 def asr_text_post_processing(text):
     # convert to uppercase
-    text = text.upper()
     # remove non-scoring words from evaluation
+    text = text.upper()
     remaining_words = []
     for word in text.split():
         if word in non_scoring_words:
@@ -40,7 +40,6 @@ if __name__ == '__main__':
     for line in arc_post_handle:
         words = line.strip().split(' ')
         text = asr_text_post_processing(' '.join(words[:-1]))
-        print(text)
         uttid_field = words[-1]
         transcription = text + ' ' + uttid_field
         output_text_handle.write(transcription + '\n')

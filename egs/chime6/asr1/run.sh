@@ -182,19 +182,20 @@ if [ ${stage} -le 7 ] && [ ${stop_stage} -ge 7 ]; then
     decode_dir=decode_${train_dev}
 
 #    # split data
-    splitjson.py --parts ${nj} ${feat_dt_dir}/data.json
+#    splitjson.py --parts ${nj} ${feat_dt_dir}/data.json
     #### use CPU for decoding
     ngpu=0
 
-    ${decode_cmd} JOB=1:${nj} ${expdir}/${decode_dir}/log/decode.JOB.log \
-            asr_recog.py \
-            --config ${decode_config} \
-            --ngpu ${ngpu} \
-            --backend ${backend} \
-            --recog-json ${feat_dt_dir}/split${nj}utt/data.JOB.json \
-            --result-label ${expdir}/${decode_dir}/data.JOB.json \
-            --model ${expdir}/results/${recog_model}  \
+#    ${decode_cmd} JOB=1:${nj} ${expdir}/${decode_dir}/log/decode.JOB.log \
+#            asr_recog.py \
+#            --config ${decode_config} \
+#            --ngpu ${ngpu} \
+#            --backend ${backend} \
+#            --recog-json ${feat_dt_dir}/split${nj}utt/data.JOB.json \
+#            --result-label ${expdir}/${decode_dir}/data.JOB.json \
+#            --model ${expdir}/results/${recog_model}  \
 
-    local/score.sh
+#    local/score.sh
+    score_sclite.sh --wer true --nlsyms ${nlsyms} --filter local/wer_output_filter ${expdir}/${decode_dir} ${dict}
     echo "Finished"
 fi

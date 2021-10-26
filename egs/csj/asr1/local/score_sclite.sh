@@ -34,9 +34,13 @@ if [ ! -z ${nlsyms} ]; then
     filt.py -v $nlsyms ${dir}/ref.trn.org > ${dir}/ref.trn
     filt.py -v $nlsyms ${dir}/hyp.trn.org > ${dir}/hyp.trn
 fi
+
 if [ ! -z ${filter} ]; then
-    sed -i.bak3 -f ${filter} ${dir}/hyp.trn
-    sed -i.bak3 -f ${filter} ${dir}/ref.trn
+    cat ${dir}/hyp.trn | local/wer_output_filter > ${dir}/hyp1.trn
+    cat ${dir}/ref.trn | local/wer_output_filter > ${dir}/ref1.trn
+
+#    cp ${dir}/hyp1.trn ${dir}/hyp.trn
+#    cp ${dir}/ref1.trn ${dir}/ref.trn
 fi
 
 for dat in ref hyp
