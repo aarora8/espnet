@@ -10,12 +10,13 @@
 backend=pytorch
 stage=0        # start from 0 if you need to start from data preparation
 stop_stage=100
-ngpu=2         # number of gpus ("0" uses cpu, otherwise use gpu)
+ngpu=1         # number of gpus ("0" uses cpu, otherwise use gpu)
 debugmode=1
 dumpdir=dump   # directory to dump full features
 N=0            # number of minibatches to be used (mainly for debugging). "0" uses all minibatches.
 verbose=0      # verbose option
-resume=exp/train_worn_simu_u400k_cleaned_trim_sp_pytorch_train/results/snapshot.ep.50        # Resume the training from snapshot
+resume=
+#resume=exp/train_worn_simu_u400k_cleaned_trim_sp_pytorch_train/results/snapshot.ep.50        # Resume the training from snapshot
 
 # feature configuration
 do_delta=false
@@ -167,33 +168,33 @@ if [ ${stage} -le 7 ] && [ ${stop_stage} -ge 7 ]; then
     echo "[STAGE 7]: Decoding"
     nj=256
 
-#    if [[ $(get_yaml.py ${train_config} model-module) = *transformer* ]] || \
-#           [[ $(get_yaml.py ${train_config} model-module) = *conformer* ]] || \
-#           [[ $(get_yaml.py ${train_config} etype) = custom ]] || \
-#           [[ $(get_yaml.py ${train_config} dtype) = custom ]]; then 
-#        recog_model=model.last${n_average}.avg.best
-#
-#        average_checkpoints.py --backend ${backend} \
-#			       --snapshots ${expdir}/results/snapshot.ep.* \
-#			       --out ${expdir}/results/${recog_model} \
-#			       --num ${n_average}
-#    fi
+    if [[ $(get_yaml.py ${train_config} model-module) = *transformer* ]] || \
+           [[ $(get_yaml.py ${train_config} model-module) = *conformer* ]] || \
+           [[ $(get_yaml.py ${train_config} etype) = custom ]] || \
+           [[ $(get_yaml.py ${train_config} dtype) = custom ]]; then 
+        recog_model=model.last${n_average}.avg.best
+
+        average_checkpoints.py --backend ${backend} \
+			       --snapshots ${expdir}/results/snapshot.ep.* \
+			       --out ${expdir}/results/${recog_model} \
+			       --num ${n_average}
+    fi
     
     decode_dir=decode_${train_dev}
 
 #    # split data
-#    splitjson.py --parts ${nj} ${feat_dt_dir}/data.json
+    splitjson.py --parts ${nj} ${feat_dt_dir}/data.json
     #### use CPU for decoding
     ngpu=0
 
-#    ${decode_cmd} JOB=1:${nj} ${expdir}/${decode_dir}/log/decode.JOB.log \
-#            asr_recog.py \
-#            --config ${decode_config} \
-#            --ngpu ${ngpu} \
-#            --backend ${backend} \
-#            --recog-json ${feat_dt_dir}/split${nj}utt/data.JOB.json \
-#            --result-label ${expdir}/${decode_dir}/data.JOB.json \
-#            --model ${expdir}/results/${recog_model}  \
+    ${decode_cmd} JOB=1:${nj} ${expdir}/${decode_dir}/log/decode.JOB.log \
+            asr_recog.py \
+            --config ${decode_config} \
+            --ngpu ${ngpu} \
+            --backend ${backend} \
+            --recog-json ${feat_dt_dir}/split${nj}utt/data.JOB.json \
+            --result-label ${expdir}/${decode_dir}/data.JOB.json \
+            --model ${expdir}/results/${recog_model}  \
 
 #    local/score.sh
     score_sclite.sh --wer true --nlsyms ${nlsyms} --filter local/wer_output_filter ${expdir}/${decode_dir} ${dict}
